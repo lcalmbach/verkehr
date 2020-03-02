@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorials &mdash; Environmental Data Explorer 0.1.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Menu" href="menu.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Environmental Data Explorer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_concepts.html">Main Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu.html">Menu</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial-1-exploring-a-data-collection">Tutorial 1: Exploring a data collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#information-on-the-data-collection">Information on the data collection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#information-on-stations">Information on stations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#information-on-analysed-parameters">Information on analysed parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial-2-creating-summary-plots">Tutorial 2: Creating summary plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generating-a-bar-chart-and-customize-plot">Generating a bar chart and customize plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-other-plot-types-and-change-group-by-setting">Using other plot types and change group by setting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial-3-station-data-analysis">Tutorial 3: Station data analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#organizing-the-data">Organizing the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generating-detail-plots-for-a-station">Generating detail plots for a station</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Environmental Data Explorer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorials</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorials.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tutorial-1-exploring-a-data-collection">
+<h2>Tutorial 1: Exploring a data collection<a class="headerlink" href="#tutorial-1-exploring-a-data-collection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial will guide you through the workflow of discovering a data collection using EDE. It is based on the Ontario Provincial Groundwater Monitoring Network (PGMN) data and aims at getting an overview on this data collection. The second and third tutorials will cover the steps to take to look specifically at the data for a set of wells or a single a well of interest.</p>
+<p>When opening EDE, PGMN should already be the first item in the listbox, otherwise select it from the data collection list box.</p>
+<p align="center">
+<img src="_static/tutorial_data_collection.png" id = "img70"/>
+</p></div>
+<div class="section" id="information-on-the-data-collection">
+<h3>Information on the data collection<a class="headerlink" href="#information-on-the-data-collection" title="Permalink to this headline">¶</a></h3>
+<p>By default, the first menu item <strong>Info</strong> is selected. On the view panel you will find a overview on the data collection comprising an introductary text and a list of links, related to the data. The info menu provides a summary on what to expect from the selected data collection, for example: how many parmeters were measured, how many stations were sampled, how many years of data are available. For the Provincial Groundwater Monitoring Network (PGMN) data collection you will find the following: an introductionary text, metadata from the owner (Ontario.ca), a list of links with additional information on the data collection and metadata for two datasets included in this collection: water quality (chemistry) data and water levels.</p>
+</div>
+<div class="section" id="information-on-stations">
+<h3>Information on stations<a class="headerlink" href="#information-on-stations" title="Permalink to this headline">¶</a></h3>
+<p>Clicking on the <strong>Stations info</strong> menu item will show specific information on the stations included in the current dataset. You find again the number of all stations in the title above the first data table. The data table holds all information on the stations as well as on the number of samples taken at each station and on the timeframe the sample were collected. The table may be downloaded using the link below the table. You may also enlarge the table using by clicking in the upper right corner of the table.
+Below the table a map plot showing the position of all stations is shown. Below the map, you find an additional link to a googlemap site, showing the same dataas in the map above in a more interactive way and with a high resolution satellite backgroundimage. Google map also allows to measure distances and add lines and markers.</p>
+<p align="center">
+<img src="_static/tutorial_1_googlemap.png" id = "img70"/>
+</p><p>The PGMN network has a second dataset with water levels, this second dataset can be activated by selecting the <strong>Water levels</strong> menu item from the <strong>Select a dataset</strong> selectbox. It can then be explored in the same way as the water quality. The station names are largely identical with the water quality sampling stations explored in the previous step. Nearly all wells are equipped with a piezometer. Wells with names such as W0000114-2/3/4 have multiple pizometer at different depth intervals.</p>
+</div>
+<div class="section" id="information-on-analysed-parameters">
+<h3>Information on analysed parameters<a class="headerlink" href="#information-on-analysed-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Return to the ede page and click on the parameters menu item. A single page with all parameters having at least one observation in the dataset is shown. The minimum, maximum and average value as well as the number of observations and sampling years are shown. It can be noted, that most organic parameters and pesticides have been sampled only once at most stations whereas most inorganic parameters where sampled yearly. In order to focus on specific parameter groups and parameters during an analysis, you may filter the parameter displayed in the viewport using the data filters on the sideboard. For example to gain more insight in the parameter arsenic, enable both the parameter_group and parameter filter in the data filter select box. Then select the parameter group ‘inorganic parameters’ and from the parmaeter list in the select box below, which now only contains inorganic parameters, type in arsenic or select the parameter from the list. You may skip the step of preselecting the parameter group and select arsenic directly from the full list. However, if your analysis will only require inorganic parameters, all operations will be faster if the parameter list is filtered first.</p>
+<p align="center">
+<img src="_static/tutorial_1_parameter_filter.png" id = "img70"/>
+</p><p>The viewport now contains again the parameter summary table, however in a transposed format where each row holds a separate value. This makes it easier to read. Below the summary table, an additional table shows the statistical values for each station. At the bottom of the page a map is rendered. Concentrations are rendered in the following colors:</p>
+<ul>
+<li><p>&lt; 10 percentile: blue</p></li>
+<li><p>10-90 percentile green</p></li>
+<li><blockquote>
+<div><p>90 percentile: red</p>
+</div></blockquote>
+</li>
+</ul>
+<p>The map allows to detect spatial patterns. A more detailed analysis can be done using the plotting menu item, explained in tutorial 2 and 3. You should by now have a good understanding on the number, spatial distribution and sampling frequency of of stations and on the availabe parameters.</p>
+</div>
+</div>
+<div class="section" id="tutorial-2-creating-summary-plots">
+<h2>Tutorial 2: Creating summary plots<a class="headerlink" href="#tutorial-2-creating-summary-plots" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Introduction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial will guide you through the procedures to compare groundwater composition provided from overburden wells, completed in sand or gravel aquifers or bedrock wells, completed in a solid rock aquifer, for example in a sandstone or fractured carbonates aquifer. Its aim is to start gaining an understing on a large dataset using plotting.</p>
+</div>
+<div class="section" id="generating-a-bar-chart-and-customize-plot">
+<h3>Generating a bar chart and customize plot<a class="headerlink" href="#generating-a-bar-chart-and-customize-plot" title="Permalink to this headline">¶</a></h3>
+<p>Select the <em>Plotting</em> item from the menu radio buttons. This will generate the default plot type (bar chart) using the first parameter appearing in the parameter list. The bars are grouped by the sampling year and each bar represents the annual average for all measured concentrations.
+Since the set of parmeters is large (over 300), we need to break down the set in subset. The parameters summary table in tutorial 1 revealed, that organic parameters and pesticides were sampled only once for most wells and inorganic and general parameters are sampled yearly. We will therefor filter the paramters to hold only these two groups:</p>
+<p align="center">
+<img src="_static/tutorial_2_filter_inorganics.png" id = "img70"/>
+</p><p>Note that the parmeter list for the y parameters within the <em>Plot and axis</em> section in the sidebar is automatically reduced to inorganic parameters and the bar chart in the viewport is regenerated with alkalinity, which is the first element in the newly filled parameter list. Before generating lists of plots, lets customize the current plot, since this is faster for a single plot than for multiple plots. We perform the following changes: reduce the length of the y axis, so more plots are visible on a page and adding a horizontal line showing the values averall average.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="n">Within</span> <span class="o">*</span><span class="n">Plot</span> <span class="ow">and</span> <span class="n">axis</span> <span class="n">settings</span><span class="o">*</span> <span class="n">goto</span> <span class="o">*</span><span class="n">Summary</span> <span class="n">line</span><span class="o">*</span> <span class="ow">and</span> <span class="n">select</span> <span class="n">the</span> <span class="o">*</span><span class="n">mean</span><span class="o">*</span> <span class="n">item</span><span class="o">.</span>
+<span class="mi">2</span> <span class="n">In</span> <span class="n">the</span> <span class="n">same</span> <span class="n">section</span> <span class="n">check</span> <span class="n">the</span> <span class="o">*</span><span class="n">Define</span> <span class="n">axis</span> <span class="n">length</span><span class="o">*</span> <span class="n">checkbox</span> <span class="ow">and</span> <span class="nb">set</span> <span class="n">the</span> <span class="n">y</span><span class="o">-</span><span class="n">axis</span> <span class="n">length</span> <span class="n">to</span> <span class="mf">200.</span>
+</pre></div>
+</div>
+<p>The plot should now look similar to the one below:</p>
+<p align="center">
+<img src="_static/tutorial_2_filter_alk_plot.png" id = "img70"/>
+</p><p>The plot shows, that values show little variation between 200 and 290 mg/l CaCO3 with an average of approximately 240 mg/L. The most prominent change is found between the years 2015 and 2016. A series of identical plots can be generated by setting the <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">plots</span> <span class="pre">by</span></code> select box to <code class="docutils literal notranslate"><span class="pre">parameter</span></code>. This will generate a seperate plot for each parameter found in the current dataset, which is currently filtered to hold only inorganic and conventional parameters. The viewport is not filled with a plot for each parameter with available data.</p>
+<p align="center">
+<img src="_static/_static/tutorial_2_multi_plot.png" id = "img70"/>
+</p><p>Any result that you would like to keep for your report can be copied to the context menu by clicking on the […]icon on the upper right of the plot and then select <code class="docutils literal notranslate"><span class="pre">save</span> <span class="pre">as</span> <span class="pre">SVG/PNG</span></code>. Note that not all parameters have the same sampling frequency and some parameters exhibit a much higher variability than alkalinity. Typically in long time series we observe a reduction of the elements with low concentrations such as chromium. This reduction is not due to anactually observation of lower concentration but due to the reduction of the method detection limit over time: If elements are not detected, their concentration is not necessarily zero, but below the method detection limit. To be able to plot such a value, it generally represented by 50% of the detection limit. Therefore if a concentration in 2000 and 2010 is 0.1 and 0.01 respectively and the true concentration is 0.0001 in both years, the value would be non detected by the laboratory, reported as &lt;0.1 and &lt;0.01 and plotted as 0.05 and 0.005, suggesting a decrease over time.</p>
+</div>
+<div class="section" id="using-other-plot-types-and-change-group-by-setting">
+<h3>Using other plot types and change group by setting<a class="headerlink" href="#using-other-plot-types-and-change-group-by-setting" title="Permalink to this headline">¶</a></h3>
+<p>So far changes in concentrations over time have been analysed. To gain a summary view of the data, further grouping of plots can be interesting. In a next step we willcompare bedrock and overburden wells. To accomplish this, simply switch the <em>Group markers by year</em> item from year to aquifer type. Note that when plotting multiple plots any click on a control in the sidebar will stop the current process and requild the plots using the new settings. Don’t wait to apply corrections until the current process is completed.</p>
+<p align="center">
+<img src="_static/tutorial_2_aq_type.png" id = "img70"/>
+</p><p>When grouping the aquifer type, you find four possible types (bedrock, overburden, N/A and interface) however you only want to compare pure bedrock and overburden wells. This may be achieved by adding bedrock and overburden to the filters in the <em>Datafilters</em> section: Add the <em>aquifer</em> item to the <code class="docutils literal notranslate"><span class="pre">Filter</span> <span class="pre">data</span> <span class="pre">by</span></code> select box, a new selectbox named <code class="docutils literal notranslate"><span class="pre">Filter</span> <span class="pre">aquifer</span> <span class="pre">types</span></code>. The newly created plots only include the two aquifer specified. Note that some elements tend to have higher values in bedrock than overburden, e.g. conductivity, cobalt, hardness, while for other parameters the opposite is true (manganese, lead, iron…).</p>
+<p align="center">
+<img src="_static/tutorial_2_filter_aq_type.png" id = "img70"/>
+</p><p>Since every bar represents the average over multiple values, but the number of values is not visible, some of apparent differneces may by based on outlier valus in one of the aquifer types, while the bulk of the data may be indeed similar in both aquifer types. To test this hypothesis, you may select the median instead of the average bar aggregation method. You will find that the values will drastically change to lower values in some cases, for example for iron. Next the distribution of water quality parameters may be visualized using other plottypes, each of which can add further insight in the understanding of the dataset. Select histogram from the <code class="docutils literal notranslate"><span class="pre">Plot</span> <span class="pre">type</span></code> select box, located in the upper part of the sidebar menu. all barcharts will be transformed in histograms showing the distribution of overburden and bedrock wells. If the distribution of the two populations are fairly well seperated, this configuration maybe useful, however if there is much overlapp, the histograms for both aquifer types overlapp and the plot becomes hard to read. To remedy this, select non from the <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">markers</span> <span class="pre">by</span></code> select box. This will give a better impression on the overall distribution, however information on the individual distributions of bedrock and overburden wells are lost. You may however achive this again, by generating the plot series twice: one time with only <code class="docutils literal notranslate"><span class="pre">bedrock</span></code> left in the filter, and a second time with <em>overburden</em> set in the filter. If you start to be interested in a selection of parameters only and dont want all parameters to be generated with every change you apply to the settings, you may also define <em>parameter</em> as a filter from the <em>Filter data by</em> select box and then pick the required parameter from the new select box. For the filter defined as below, histograms will be generated for bedrock data only and plots are created for the elements calcium, magnesium, chloride and sodium.</p>
+<p align="center">
+<img src="_static/tutorial_2_full_filter_plots.png" id = "img70"/>
+</p></div>
+</div>
+<div class="section" id="tutorial-3-station-data-analysis">
+<h2>Tutorial 3: Station data analysis<a class="headerlink" href="#tutorial-3-station-data-analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Introduction<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The first two tutorials have shown you, how toget an oversight on a large dataset quickly and efficiently. In this tutorial, we will learn techniques to explore data on a local and site level. For this we will use the second data collection <em>Ontario Provincial (Stream) Water Quality Monitoring Network Data</em>. It consists on water chemistry data from over 1100 river and lake locations. This tutorial will focus on representing data from the <a class="reference external" href="https://en.wikipedia.org/wiki/Grand_River_(Ontario)">Grand River</a> flowing south from its source near Wareham, Ontario, and emptying into the north shore of Lake Erie. for the purpose of this tutorial we are specifically interested in changes occurring from upstream to downstream and in long term water quality changes.</p>
+</div>
+<div class="section" id="organizing-the-data">
+<h3>Organizing the data<a class="headerlink" href="#organizing-the-data" title="Permalink to this headline">¶</a></h3>
+<p>Start by selecting the <em>Plotting</em> menu. In order to work with the data efficiently, we have to use the filters. Filtering for the required stations and parameters not only makes it easier to work with the shorter lists, but also it will accellerate the creation of plots and tables since calculations are based on a smaller dataset. Go to the <em>Data filters</em> section and filter for the following data: invoke the filters for <em>parameter_group</em> and <em>water body</em>. Then select <em>Inorganic parameters</em> and <em>Conventional parameters</em> in the parameter_group filter and <em>Grand river</em> in the water body filter. Note that since the list of rivers is very long, it is most efficient to type in at least the beginning if the river name, the list of stations will adapt to rivers matching the entered characters and finally you can pick the river from this much shorter list.</p>
+<p align="center">
+<img src="_static/tutorial_2_filter1.png" id = "img70"/>
+</p></div>
+<div class="section" id="generating-detail-plots-for-a-station">
+<h3>Generating detail plots for a station<a class="headerlink" href="#generating-detail-plots-for-a-station" title="Permalink to this headline">¶</a></h3>
+<p>We change the default setting for the plot type to the map and select the Cond25 (conductivity at 25 °C) parameter. Conductivity is at the same time a good estimator of dissolved inorganic matter and also is measured routinely, therefore all stations are certain to show on the map. The map below should show on your viewport. Use the scroll wheel on your mouse to zoom and center the stations on the plot. Note that conductivity rises gradually on the travel from the source area downstream. In order to gain further insight in the values, select the Show data checkbox. the map is autoamticaly rerendered and you will find a table with all data used below the plot. Each value represents the average of all data available at this station. You will find that the highest average occurs at station S-16018402402.</p>
+<p align="center">
+<img src="_static/_static/tutorial_3_map_cond25.png" id = "img70"/>
+</p><p>To further investigate the spatial upstream-downstream trend for other parameters, select <em>parameter</em> from the <em>Group plots by</em> select box. This generates a separate map plot for every parameter included in the parameter list (currently set to <em>Inorganic parameters</em>).</p>
+<p>Concentration changes over time represent another important aspect in water quality studies. Simply reset the <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">plots</span> <span class="pre">by</span></code> select box to <em>none</em> and select the <code class="docutils literal notranslate"><span class="pre">Time</span> <span class="pre">series</span></code> plot type. Also make sure, that COND25 is the selected parameter. A plot is generating showing the conductivity changes over time for all station. Since the Grand river has 20 stations, the plot becomes very difficult to read. This data must obviously be plotted with fewer stations per plot. There are two options to achieve this goal:</p>
+<p>1 You may again group the plots by the station parameter, creating a plot for each station. This method is convenient, if you want to compare plots to each other. use the parameter filter if you are interested in only a few specific parameters</p>
+<p>2 Define the station in the <code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">filters</span></code> section as an additional filter, then start selecting stations. This is usually faster, since only one plot needs to be rendered and you may include multiple stations on the same time series plot.</p>
+<p align="center">
+<img src="_static/tutorial_3_ts_grandriver_2402.png" id = "img70"/>
+</p></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="menu.html" class="btn btn-neutral float-left" title="Menu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lukas Calmbach
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

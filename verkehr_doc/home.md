@@ -1,0 +1,5 @@
+# Home 🚧
+
+Das Baudepartement des Kantons Basel-Stadt misst an diversen Stellen die stündlich passierenden Fahrzeuge nach diversen Fahrzeugtypen. Dise Daten werden under der Open Data Lizenz von der Fachstelle für OGD (Open Government Data) publiziert und können unter [Open Data Basel-Stadt](https://data.bs.ch/pages/home/) heruntergeladen werden. Die Aufbereitung der recht voluminösen Dateien zu Grafiken und Tabellen gestaltet sich oft als eine wenn nicht technische, dann zumindest zeitliche Herausforderung. Die Webapplikation **Verkehrszählung** bietet eine bequeme Plattform für eine schnelle Analyse dieser Daten. Über eine einfach Benutzerschnittstelle können Grafiken und Tabelle erstellt- und bei Bedarf als Dateien heruntergeladen werden. Sollten sich nach einer ersten Analyse mit der Webapplikation weitere Bedürfnisse ergeben, so können die Quelldaten immer noch gezielt von der publizierenden Stelle heruntergeladen und mit Programmen auf ihrem Desktop-Gerät weiter analysiert werden.
+
+

@@ -7,6 +7,7 @@ import traffic
 import config as cn
 import tools
 
+__version__ = '0.0.1'
 
 def show_plot_menu(data):
     value_par = st.sidebar.selectbox("Fahrzeugtyp", index=0, options=value_fields)
@@ -42,55 +43,16 @@ def show_plot_menu(data):
 
 
 
-
-
-def plot_map(_data: pd.DataFrame, val_par: str, agg_par: str, title: str):
-    midpoint = (np.average(_data['BREITENGR']), np.average(_data['LAENGENGR']))
-    _data = data.loc[(data['Year'] == 2020) & (data['Month'] == 1)]
-    _data = (_data.assign(Total=data['Total'].abs())
-             .groupby(['SiteName', 'BREITENGR', 'LAENGENGR'])['Total'].agg([('Anz_pro_Tag_Tsd', 'sum')])
-             )
-    _data['Anz_pro_Tag_Tsd'] = _data['Anz_pro_Tag_Tsd'] / 31000
-    _data = _data.reset_index()
-    st.markdown(title)
-    layer = pdk.Layer(
-        'HexagonLayer',
-        _data,
-        get_position="[LAENGENGR, BREITENGR]",
-        auto_highlight=True,
-        elevation_scale=100,
-        pickable=True,
-        elevation_range=[0, 50],
-        extruded=True,
-        coverage=0.15,
-    )
-    view_state = pdk.ViewState(
-        longitude=midpoint[1], latitude=midpoint[0], zoom=11, min_zoom=1, max_zoom=100, pitch=30, bearing=-40
-    )
-    r = pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v10",
-        layers=[layer],
-        initial_view_state=view_state,
-        tooltip={
-            "html": "<b>Value:</b> {Anz_pro_Tag_Tsd} <br/><b>Zählstelle:</b> {SiteName} <br/>",
-            "style": {
-                "backgroundColor": "steelblue",
-                "color": "white"}
-        }
-    )
-    st.pydeck_chart(r)
-    st.table(_data)
-
-
 tr = traffic.Traffic()
 data = tr.read_data()
 stats = traffic.Stats(data)
-st.sidebar.markdown('# <span style="color:steelblue">Verkehrszählung</span>', unsafe_allow_html=True)
+st.sidebar.markdown('# 🧮<span style="color:steelblue">Verkehrszählung</span>', unsafe_allow_html=True)
+st.sidebar.markdown('<small>version: {}</small>'.format(__version__), unsafe_allow_html=True)
+st.sidebar.markdown('### Menu')
 menu = st.sidebar.radio(label='', index=0, options=cn.menu_list)
-
 if menu == 'Info Datensatz':
     site_names, years = tools.get_lists(data)
-    tr.show_info(site_names, min(years))
+    tr.show_info(site_names, min(years), data)
     tr.info_sidebar()
 elif menu == 'Statistik':
     stats.render_controls()

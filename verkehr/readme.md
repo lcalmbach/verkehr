@@ -1,5 +1,5 @@
 ## Verkehrszähldaten motorisierter Individualverkehr im Kanton Basel-Stadt
-Im Kanton Basel-Stadt werden in zahlreichen Strassen der Verkehr durch Dauerzählstellen erhoben. Die erhobenen gemessenen Werte werden in dieser Applikation tagesaktuell eingelesen und lassen sich in Tabellenform oder grafisch vielseitig darstellen. Die Applikation ist in Python geschrieben und verwendet die Bibliotheken Streamlit und Altair.
+Im Kanton Basel-Stadt werden in zahlreichen Strassen der Verkehr durch Dauerzählstellen erhoben. Die gemessenen Werte werden in dieser Applikation tagesaktuell eingelesen und lassen sich in als Tabelle oder Grafik vielseitig darstellen. Die Applikation ist in Python geschrieben und verwendet hauptsächlich Bibliotheken [Streamlit](https://streamlit.io/) und [Altair](https://altair-viz.github.io/).
 
 Datenquelle: [Bau- und Verkehrsdepartement Basel-Stadt](https://www.bvd.bs.ch/)
 
