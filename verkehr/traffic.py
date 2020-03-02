@@ -584,10 +584,10 @@ class BarChart:
         """Group by controls for plots and markers"""
 
         st.sidebar.markdown('---')
-        st.sidebar.markdown('#### Gruppierung von Plots und Symbolen')
+        st.sidebar.markdown('#### Gruppierung von Plots und Balken')
         self.plot_groupby = st.sidebar.selectbox('Gruppiere Grafiken nach', list(cn.group_by_dic.keys()),
                                                  format_func=lambda x: cn.group_by_dic[x])
-        self.marker_groupby = st.sidebar.selectbox('Gruppiere Symbole nach', index=6,
+        self.marker_groupby = st.sidebar.selectbox('Gruppiere Balken nach', index=2,
                                                    options=list(cn.group_by_dic.keys()),
                                                    format_func=lambda x: cn.group_by_dic[x])
 

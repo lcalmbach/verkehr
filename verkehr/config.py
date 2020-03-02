@@ -29,6 +29,6 @@ STATION_NAME_COLUMN = 'SiteName'
 color_schema = "set1"  # https://vega.github.io/vega/docs/schemes/#reference
 symbol_size = 60
 date_time_column = 'DateTimeFrom'
-USER_MANUAL_LINK: str = 'https://traffic_bs.readthedocs.io/en/latest/'
+USER_MANUAL_LINK: str = 'https://verkehr.readthedocs.io/de/latest/'
 HELP_ICON: str = 'https://img.icons8.com/offices/30/000000/help.png'
 
