@@ -3,7 +3,7 @@ This module contains the classes .
 """
 
 __author__ = "lcalmbach@gmail.com"
-__Version__ = '0.0.1'
+__Version__ = '0.1.0'
 
 import pandas as pd
 import numpy as np
@@ -132,6 +132,14 @@ class Stats:
         st.table(_df)
         st.markdown(tools.get_table_download_link(_df), unsafe_allow_html=True)
 
+    def get_group_item_expression(self, item):
+        if self.group_by == 'Weekday':
+            return cn.weekday_long_dic[item]
+        elif self.group_by == 'Month':
+            return cn.month_long_dic[item]
+        else:
+            return item
+
     def show_grouped_tables(self):
         st.markdown('## Anzahl Fahrzeuge an Zählstelle')
         subtitle = '{}'.format(self.year_from_filter) if self.year_from_filter == self.year_to_filter \
@@ -143,11 +151,9 @@ class Stats:
         for item in _list:
             _df_group = self.data.loc[(self.data[self.group_by] == item)]
             _df_group = self.get_stats(_df_group)
-            st.markdown('### {}: {}'.format(cn.group_by_dic[self.group_by], item))
+            st.markdown('### {}: {}'.format(cn.group_by_dic[self.group_by], self.get_group_item_expression(item)))
             st.table(_df_group)
             st.markdown(tools.get_table_download_link(_df_group), unsafe_allow_html=True)
-
-
 
 
 ###############################################################################
@@ -535,17 +541,21 @@ class BarChart:
         _lis = df[self.plot_groupby].unique().tolist()
         for _group in _lis:
             df_grp_data = df.loc[(df[self.plot_groupby] == _group)]
-            title = "{}, {}".format(self.site_filter, _group)
+            if self.site_filter != 'Alle':
+                title = "{}, {}".format(self.site_filter, _group)
+            else:
+                title = _group
             self.render_plot(title, data=df_grp_data, val_par=self.ypar, marker_par=self.marker_groupby)
 
     def filter_data(self, data):
+        st.write(self.site_filter)
         if self.site_filter != 'Alle':
             df = data.loc[(data['SiteName'] == self.site_filter)]
+            if self.direction_filter != 'Alle':
+                df = df.loc[(df['DirectionName'] == self.direction_filter)]
         else:
             df = data
-        if self.direction_filter != 'Alle':
-            df = df.loc[(df['DirectionName'] == self.direction_filter)]
-        if self.time_filter != 'Alle':
+        if self.time_filter and self.time_filter != 'Alle':
             df = df.loc[(df['Year'] == self.time_filter)]
         return df
 
@@ -559,6 +569,12 @@ class BarChart:
         else:
             df = data[['SiteName', self.time_aggregation_interval, self.marker_groupby, par]]
             df = df.groupby(['SiteName', self.time_aggregation_interval, self.marker_groupby]).sum().reset_index()
+        if self.marker_groupby == 'Weekday':
+            df['Weekday'].replace(cn.weekday_short_dic, inplace=True)
+        elif self.marker_groupby == 'Month':
+            df['Month'].replace(cn.month_short_dic, inplace=True)
+
+
         df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
         df.sort_values(by=['SiteName', self.time_aggregation_interval])
         return df
@@ -568,8 +584,8 @@ class BarChart:
         tooltips = tooltips + ['DirectionName',] + tooltips if self.direction_filter != 'Alle' else tooltips
         tooltips = tooltips + ['LaneCode', ] + tooltips if self.lane_filter != 'Alle' else tooltips
         bar = alt.Chart(data).mark_bar().encode(
-            x='{}:O'.format(marker_par),
-            y='{}:Q'.format(val_par),
+            x=alt.X('{}:O'.format(marker_par), sort=[], title=cn.group_by_dic[marker_par]),
+            y=alt.Y('{}:Q'.format(val_par), title=cn.parameter_dic[val_par]),
             tooltip=tooltips
         )
         # not sure why the mean is sometime lower than the minimum bar mean
@@ -584,17 +600,18 @@ class BarChart:
         """Group by controls for plots and markers"""
 
         st.sidebar.markdown('---')
-        st.sidebar.markdown('#### Gruppierung von Plots und Balken')
-        self.plot_groupby = st.sidebar.selectbox('Gruppiere Grafiken nach', list(cn.group_by_dic.keys()),
+        _list = list(cn.group_by_dic.keys())
+        self.plot_groupby = st.sidebar.selectbox('Gruppiere Grafiken nach', _list,
                                                  format_func=lambda x: cn.group_by_dic[x])
+        del _list[0]
+        del _list[2]
         self.marker_groupby = st.sidebar.selectbox('Gruppiere Balken nach', index=2,
-                                                   options=list(cn.group_by_dic.keys()),
+                                                   options=_list,
                                                    format_func=lambda x: cn.group_by_dic[x])
 
     def render_axis_controls(self):
 
         st.sidebar.markdown('---')
-        st.sidebar.markdown('#### Y Achse')
         if self.plot_groupby != 'Fahrzeugtyp':
             self.ypar = st.sidebar.selectbox('Parameter', list(cn.parameter_dic.keys()),
                                              format_func=lambda x: cn.parameter_dic[x])

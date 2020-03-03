@@ -7,7 +7,7 @@ import traffic
 import config as cn
 import tools
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 def show_plot_menu(data):
     value_par = st.sidebar.selectbox("Fahrzeugtyp", index=0, options=value_fields)
