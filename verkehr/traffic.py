@@ -12,6 +12,7 @@ import locale
 import altair as alt
 import pydeck as pdk
 import streamlit as st
+from datetime import date, timedelta
 from enum import Enum
 
 import config as cn
@@ -98,7 +99,6 @@ class Stats:
             _df = self.data
         return _df
 
-    @st.cache(suppress_st_warning=True)
     def get_stats(self, data: pd.DataFrame):
         #hourly stats
         _df_h = (data.assign(Total=data[self.parameter].abs()
@@ -106,8 +106,6 @@ class Stats:
         # daily stats
         _df_d = data[['SiteName', 'Date', self.parameter]]
         _df_d = _df_d.groupby(['SiteName', 'Date']).sum()
-        #df_d = _df_d[['SiteName', self.parameter]]
-        #df_d.set_index(['SiteName'])
         _df_d = (_df_d.assign(Total=_df_d[self.parameter].abs()
                            ).groupby(['SiteName'])[self.parameter].agg([('Min. /Tag', 'min'),
                                                                  ('Max. /Tag', 'max')]))
@@ -165,7 +163,6 @@ class TimeSeriesPlot:
         self.marker_group_by = ''
         self.plot_groupby = ''
         self.marker_groupby = 'SiteName'
-        self.define_axis_length = False
         self.plot_width = cn.def_plot_width
         self.plot_height = cn.def_plot_height
         self.ypar = ''
@@ -179,7 +176,7 @@ class TimeSeriesPlot:
         self.site_filter = []
         self.lane_filter = []
         self.direction_filter = []
-        self.time_filter = 'Alle'
+        self.year_filter = 'Alle'
         self.time_aggregation_interval = 'Date'
 
         self.site_list, self.year_list = tools.get_lists(data)
@@ -216,8 +213,14 @@ class TimeSeriesPlot:
             df = data
         if self.direction_filter != 'Alle':
             df = df.loc[(df['DirectionName'] == self.direction_filter)]
-        if self.time_filter != 'Alle':
-            df = df.loc[(df['Year'] == self.time_filter)]
+        if self.year_filter != 'Alle':
+            if self.year_filter == 'Gestern':
+                yesterday = date.today() - timedelta(days=20)
+                df = df.loc[(df['Date'] == yesterday)]
+            elif self.year_filter == 'Letzte Woche':
+                pass
+            else:
+                df = df.loc[(df['Year'] == self.year_filter)]
         return df
 
     def prepare_data(self, data: pd.DataFrame, par: str):
@@ -254,21 +257,36 @@ class TimeSeriesPlot:
         else:
             scy = alt.Scale(domain=(self.yax_min, self.yax_max))
 
-        line = alt.Chart(df, title=title).mark_line(point=False, clip=True
-                                                    ).transform_window(
-            rolling_mean='mean({})'.format(par),
-            frame=[-15, 15]
-        ).encode(
-            x=alt.X('{}:T'.format(self.time_aggregation_interval),
-                    axis=alt.Axis(title=x_lab)),
-            y=alt.Y('rolling_mean:Q',
-                    scale=scy,
-                    axis=alt.Axis(title=y_lab)
-                    ),
-            color=alt.Color(marker_par,
-                            scale=alt.Scale(scheme=cn.color_schema)
-                            ),
-        )
+        if self.time_aggregation_interval == 'Date':
+            line = alt.Chart(df, title=title).mark_line(point=False, clip=True
+                                                        ).transform_window(
+                rolling_mean='mean({})'.format(par),
+                frame=[-15, 15]
+            ).encode(
+                x=alt.X('{}:T'.format(self.time_aggregation_interval),
+                        axis=alt.Axis(title=x_lab)),
+                y=alt.Y('rolling_mean:Q',
+                        scale=scy,
+                        axis=alt.Axis(title=y_lab)
+                        ),
+                color=alt.Color(marker_par,
+                                scale=alt.Scale(scheme=cn.color_schema)
+                                ),
+            )
+        else:
+            line = alt.Chart(df).mark_line(point=True, clip=True
+            ).encode(
+                x=alt.X('{}:T'.format(self.time_aggregation_interval),
+                        axis=alt.Axis(title=x_lab)),
+                y=alt.Y('{}:Q'.format(par),
+                        scale=scy,
+                        axis=alt.Axis(title=y_lab)
+                        ),
+                color=alt.Color(marker_par,
+                        scale=alt.Scale(scheme=cn.color_schema)
+                        ),
+            )
+
         points = alt.Chart(df).mark_point(
         ).encode(
             x=alt.X('{}:T'.format(self.time_aggregation_interval),
@@ -293,7 +311,7 @@ class TimeSeriesPlot:
         st.sidebar.markdown('#### Gruppierung von Plots und Symbolen')
         self.plot_groupby = st.sidebar.selectbox('Gruppiere Grafiken nach', list(cn.group_by_dic.keys()),
                                                  format_func=lambda x: cn.group_by_dic[x])
-        self.marker_groupby = st.sidebar.selectbox('Gruppiere Symbole nach', index=6,
+        self.marker_groupby = st.sidebar.selectbox('Gruppiere Symbole nach', index=5,
                                                    options=list(cn.group_by_dic.keys()),
                                                    format_func=lambda x: cn.group_by_dic[x])
 
@@ -304,10 +322,10 @@ class TimeSeriesPlot:
         if self.plot_groupby != 'Fahrzeugtyp':
             self.ypar = st.sidebar.selectbox('Parameter', list(cn.parameter_dic.keys()),
                                              format_func=lambda x: cn.parameter_dic[x])
-        self.define_axis_length = st.sidebar.checkbox('Define axis length', value=False)
-        if self.define_axis_length:
-            self.plot_width = st.sidebar.number_input('Width (pixel)', value=self.plot_width)
-            self.plot_height = st.sidebar.number_input('Height (pixel)', value=self.plot_height)
+        #self.define_axis_length = st.sidebar.checkbox('Define axis length', value=False)
+        #if self.define_axis_length:
+        #    self.plot_width = st.sidebar.number_input('Width (pixel)', value=self.plot_width)
+        #   self.plot_height = st.sidebar.number_input('Height (pixel)', value=self.plot_height)
 
         # self.__show_data_table = st.sidebar.checkbox('Show data table', value=False, key=None)
 
@@ -328,7 +346,7 @@ class TimeSeriesPlot:
             self.direction_filter = st.sidebar.selectbox('Richtung', index=0, options=['Alle', ] + _lst)
 
         _lst = ['Alle', ] + self.year_list + ['Gestern', 'Letzte Woche', 'Letzter Monat']
-        self.time_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)
+        self.year_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)
 
 ###############################################################################
 class Map:
@@ -354,7 +372,7 @@ class Map:
         self.lane_filter = 'Alle'
         self.direction_filter = 'Alle'
         self.direction_filter = 'Alle'
-        self.time_filter = 'Alle'
+        self.year_filter = 'Alle'
         self.time_aggregation_interval = 'Date'
 
         self.site_list, self.year_list = tools.get_lists(data)
@@ -391,20 +409,16 @@ class Map:
             df = data
         if self.direction_filter != 'Alle':
             df = df.loc[(df['DirectionName'] == self.direction_filter)]
-        if self.time_filter != 'Alle':
-            df = df.loc[(df['Year'] == self.time_filter)]
+        if self.year_filter != 'Alle':
+            df = df.loc[(df['Year'] == self.year_filter)]
         return df
 
     def prepare_data(self, data: pd.DataFrame, par: str):
-        if self.marker_groupby == 'Fahrzeugtyp':
-            return data
-        elif self.marker_groupby == 'none':
-            df = data[['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval, par]]
-            df = df.groupby(['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval, self.marker_groupby]).sum().reset_index()
-            df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
-        else:
-            df = data[['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval, self.marker_groupby, par]]
-            df = df.groupby(['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval, self.marker_groupby]).sum().reset_index()
+
+        df = data[['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval, par]]
+        df = df.groupby(['SiteName', 'LAENGENGR', 'BREITENGR', self.time_aggregation_interval]).sum().reset_index()
+        df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
+
         df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
         df.sort_values(by=['SiteName', self.time_aggregation_interval])
         return df
@@ -453,9 +467,9 @@ class Map:
         st.sidebar.markdown('#### Gruppierung von Plots und Symbolen')
         self.plot_groupby = st.sidebar.selectbox('Gruppiere Grafiken nach', list(cn.group_by_dic.keys()),
                                                  format_func=lambda x: cn.group_by_dic[x])
-        self.marker_groupby = st.sidebar.selectbox('Gruppiere Symbole nach', index=6,
-                                                   options=list(cn.group_by_dic.keys()),
-                                                   format_func=lambda x: cn.group_by_dic[x])
+        #self.marker_groupby = st.sidebar.selectbox('Gruppiere Symbole nach', index=5,
+        #                                           options=list(cn.group_by_dic.keys()),
+        #                                           format_func=lambda x: cn.group_by_dic[x])
 
     def render_axis_controls(self):
 
@@ -464,10 +478,10 @@ class Map:
         if self.plot_groupby != 'Fahrzeugtyp':
             self.ypar = st.sidebar.selectbox('Parameter', list(cn.parameter_dic.keys()),
                                              format_func=lambda x: cn.parameter_dic[x])
-        self.define_axis_length = st.sidebar.checkbox('Define axis length', value=False)
-        if self.define_axis_length:
-            self.plot_width = st.sidebar.number_input('Width (pixel)', value=self.plot_width)
-            self.plot_height = st.sidebar.number_input('Height (pixel)', value=self.plot_height)
+        #self.define_axis_length = st.sidebar.checkbox('Define axis length', value=False)
+        #if self.define_axis_length:
+            #    self.plot_width = st.sidebar.number_input('Width (pixel)', value=self.plot_width)
+            #self.plot_height = st.sidebar.number_input('Height (pixel)', value=self.plot_height)
 
         # self.__show_data_table = st.sidebar.checkbox('Show data table', value=False, key=None)
 
@@ -488,7 +502,7 @@ class Map:
             self.direction_filter = st.sidebar.selectbox('Richtung', index=0, options=['Alle', ] + _lst)
 
         _lst = ['Alle', ] + self.year_list + ['Gestern', 'Letzte Woche', 'Letzter Monat']
-        self.time_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)
+        self.year_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)
 
 ###############################################################################
 
@@ -514,7 +528,7 @@ class BarChart:
         self.site_filter = []
         self.lane_filter = []
         self.direction_filter = []
-        self.time_filter = 'Alle'
+        self.year_filter = 'Alle'
         self.time_aggregation_interval = 'Date'
 
         self.site_list, self.year_list = tools.get_lists(data)
@@ -540,7 +554,10 @@ class BarChart:
     def render_attribute_plot_group(self, df):
         _lis = df[self.plot_groupby].unique().tolist()
         for _group in _lis:
+            tools.log('{}: fetching data'.format(_group))
             df_grp_data = df.loc[(df[self.plot_groupby] == _group)]
+            tools.log('{}: preparing data'.format(_group))
+            df_grp_data = self.prepare_data(df_grp_data, self.ypar)
             if self.site_filter != 'Alle':
                 title = "{}, {}".format(self.site_filter, _group)
             else:
@@ -548,46 +565,43 @@ class BarChart:
             self.render_plot(title, data=df_grp_data, val_par=self.ypar, marker_par=self.marker_groupby)
 
     def filter_data(self, data):
-        st.write(self.site_filter)
         if self.site_filter != 'Alle':
             df = data.loc[(data['SiteName'] == self.site_filter)]
             if self.direction_filter != 'Alle':
                 df = df.loc[(df['DirectionName'] == self.direction_filter)]
         else:
             df = data
-        if self.time_filter and self.time_filter != 'Alle':
-            df = df.loc[(df['Year'] == self.time_filter)]
+        if self.year_filter and self.year_filter != 'Alle':
+            df = df.loc[(df['Year'] == self.year_filter)]
         return df
 
     def prepare_data(self, data: pd.DataFrame, par: str):
         if self.marker_groupby == 'Fahrzeugtyp':
             return data
-        elif self.marker_groupby == 'none':
-            df = data[['SiteName', self.time_aggregation_interval, par]]
-            df = df.groupby(['SiteName', self.time_aggregation_interval, self.marker_groupby]).sum().reset_index()
-            df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
         else:
-            df = data[['SiteName', self.time_aggregation_interval, self.marker_groupby, par]]
-            df = df.groupby(['SiteName', self.time_aggregation_interval, self.marker_groupby]).sum().reset_index()
+            df = data[['SiteName', 'Date', self.marker_groupby, par]]
+            df = df.groupby(['SiteName', 'Date', self.marker_groupby]).sum().reset_index()
+            df = df[['SiteName', self.marker_groupby, par]]
+            df = df.groupby(['SiteName', self.marker_groupby]).mean().reset_index()
         if self.marker_groupby == 'Weekday':
             df['Weekday'].replace(cn.weekday_short_dic, inplace=True)
         elif self.marker_groupby == 'Month':
             df['Month'].replace(cn.month_short_dic, inplace=True)
 
-
-        df[self.time_aggregation_interval] = pd.to_datetime(df[self.time_aggregation_interval])
-        df.sort_values(by=['SiteName', self.time_aggregation_interval])
         return df
 
     def render_plot(self, title: str, data: pd.DataFrame, val_par: str, marker_par: str):
         tooltips = ['SiteName', val_par]
-        tooltips = tooltips + ['DirectionName',] + tooltips if self.direction_filter != 'Alle' else tooltips
-        tooltips = tooltips + ['LaneCode', ] + tooltips if self.lane_filter != 'Alle' else tooltips
+        if self.direction_filter:
+            tooltips = tooltips + ['DirectionName', ] + tooltips if self.direction_filter != 'Alle' else tooltips
+        if self.lane_filter:
+            tooltips = tooltips + ['LaneCode', ] + tooltips if self.lane_filter != 'Alle' else tooltips
         bar = alt.Chart(data).mark_bar().encode(
             x=alt.X('{}:O'.format(marker_par), sort=[], title=cn.group_by_dic[marker_par]),
-            y=alt.Y('{}:Q'.format(val_par), title=cn.parameter_dic[val_par]),
+            y=alt.Y('mean({})'.format(val_par), title=cn.parameter_dic[val_par]),
             tooltip=tooltips
         )
+
         # not sure why the mean is sometime lower than the minimum bar mean
         # rule = alt.Chart(data).mark_rule(color='red').encode(
         # y='mean({}):Q'.format(val_par)
@@ -615,10 +629,6 @@ class BarChart:
         if self.plot_groupby != 'Fahrzeugtyp':
             self.ypar = st.sidebar.selectbox('Parameter', list(cn.parameter_dic.keys()),
                                              format_func=lambda x: cn.parameter_dic[x])
-        self.define_axis_length = st.sidebar.checkbox('Define axis length', value=False)
-        if self.define_axis_length:
-            self.plot_width = st.sidebar.number_input('Width (pixel)', value=self.plot_width)
-            self.plot_height = st.sidebar.number_input('Height (pixel)', value=self.plot_height)
 
         # self.__show_data_table = st.sidebar.checkbox('Show data table', value=False, key=None)
 
@@ -630,7 +640,9 @@ class BarChart:
 
         st.sidebar.markdown('---')
         st.sidebar.markdown('#### Filter')
-        self.site_filter = st.sidebar.selectbox(label='Zählstelle', index=1, options=['Alle', ] + self.site_list)
+        #only provide the all option for sites, if the plots are grouped by site
+        _list = ['Alle', ] + self.site_list if self.plot_groupby == 'SiteName' else self.site_list
+        self.site_filter = st.sidebar.selectbox(label='Zählstelle', index=1, options=_list)
         if self.site_filter != 'Alle':
             _df = self.data.loc[(self.data['SiteName'] == self.site_filter)]
             _lst = tools.get_unique_values(_df, 'LaneCode')
@@ -639,4 +651,4 @@ class BarChart:
             self.direction_filter = st.sidebar.selectbox('Richtung', index=0, options=['Alle', ] + _lst)
 
         _lst = ['Alle', ] + self.year_list + ['Gestern', 'Letzte Woche', 'Letzter Monat']
-        self.time_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)
+        self.year_filter = st.sidebar.selectbox('Zeitliche Einschränkung', index=0, options=_lst)

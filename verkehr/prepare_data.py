@@ -12,13 +12,13 @@ df_merged = pd.merge(df, df_zs, on='SiteCode')
 #df_merged = df_merged.drop(['Geo Point', 'Geo Shape', 'DAT_INBETR', 'DBL_FORMAT', 'EIGENTUM', 'LINK_EXT', 'ANZ_ARME']
 #                           , axis=1)
 df_merged = df_merged[['SiteCode', 'DirectionName', 'LaneCode', 'Date', 'Total', 'MR', 'PW', 'PW+', 'Lief', 'Lief+',
-                       'Lief+Aufl.', 'LW', 'LW+', 'Sattelzug', 'Bus', 'andere', 'DateTimeFrom', 'Year', 'Month', 'Day',
-                       'Weekday', 'ZST_NAME', 'BREITENGR', 'LAENGENGR', 'GEMEINDE']]
+                       'Lief+Aufl.', 'LW', 'LW+', 'Sattelzug', 'Bus', 'andere', 'DateTimeFrom', 'Year',
+                       'Month', 'Day', 'Weekday', 'ZST_NAME', 'BREITENGR', 'LAENGENGR']]
 #use ZST_Name which only includes the address, no code, rename it to SiteName, which was dropped in the step above, as
 # it included as well the code
 df_merged.rename(columns={'ZST_NAME': 'SiteName'}, inplace=True)
 df_merged = df_merged.loc[(df_merged['Year'] >= 2018)]
-df_merged['DateTimeFrom'] = pd.to_datetime(df['DateTimeFrom'])
+df_merged['DateTimeFrom'] = pd.to_datetime(df_merged['DateTimeFrom'])
 df_merged['Date'] = pd.to_datetime(df_merged['DateTimeFrom']).apply(lambda x: x.date())
 
 print(df_merged.dtypes)
