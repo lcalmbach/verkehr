@@ -9,7 +9,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import base64
-from datetime import datetime
+from datetime import datetime, date
+import calendar
 
 
 @st.cache(suppress_st_warning=True)
@@ -56,20 +57,30 @@ def color_gradient(row: int, value_col: str, min_val: float, max_val: float, rgb
     return result[rgb]
 
 
+def month_dic(year_list: list) -> list:
+    """recieves dictionary years and generates for eyery year 12 entries: YYYY01 to YYYY to 12"""
+    result = {}
+    year_list.sort()
+    for y in year_list:
+        for m in range(1, 13):
+            result.update({y*100 + m: '{}-{}'.format(y, m)})
+    return result
+
+
 def get_pivot_data(df, group_by):
     """
     Returns a pivot table from the raw data table. df must include the station name, the data column and the
     group by column. Example
     input:
-    ¦Station¦date       ¦parameter  ¦value  ¦
+    Â¦StationÂ¦date       Â¦parameter  Â¦value  Â¦
     -----------------------------------------
-    ¦MW1    ¦1/1/2001   ¦calcium    ¦10     ¦
-    ¦MW1    ¦1/1/2001   ¦chloride   ¦21     ¦
+    Â¦MW1    Â¦1/1/2001   Â¦calcium    Â¦10     Â¦
+    Â¦MW1    Â¦1/1/2001   Â¦chloride   Â¦21     Â¦
 
     output:
-    ¦Station¦date       ¦calcium    ¦chloride   ¦
+    Â¦StationÂ¦date       Â¦calcium    Â¦chloride   Â¦
     ---------------------------------------------
-    ¦MW1    ¦1/1/2001   ¦10         ¦21         ¦
+    Â¦MW1    Â¦1/1/2001   Â¦10         Â¦21         Â¦
 
     :param df:          dataframe holding the data to be pivoted
     :param group_by:
@@ -133,7 +144,7 @@ def get_table_download_link(df: pd.DataFrame) -> str:
 
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-    href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+    href = f'<a href="data:file/csv;base64,{b64}">Als csv Datei herunterladen</a>'
 
     return href
 
@@ -169,3 +180,34 @@ def log(expression: str):
     """
 
     print(datetime.now(), expression)
+
+
+def add_months(sourcedate, months):
+    month = sourcedate.month - 1 + months
+    year = sourcedate.year + month // 12
+    month = month % 12 + 1
+    day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+    result = date(year, month, day)
+    return result
+
+
+def get_time_intervals():
+    _time_intervals = ['Alle']
+    for i in range(23):
+        ll = '{:0>2}'.format(i)
+        ul = '{:0>2}'.format(i + 1)
+        _time_intervals.append('{} - {}'.format(ll, ul))
+    _time_intervals.append('{} - {}'.format('23', '00'))
+    return _time_intervals
+
+def is_valid_date(dt: str) -> bool:
+    if dt > '':
+        try:
+            frm = '%Y-%m-%d'
+            _result = datetime.strptime(dt, frm)
+            return True
+        except ValueError:
+            return False
+    else:
+        return True
+

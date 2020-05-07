@@ -2,14 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3ccc872-155b-40e1-974e-ac11e7f85e67" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/data/scripts.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/traffic_info.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/traffic_miv.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/daily_import.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/db_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/import.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/import_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/verkehr/static/traffic_bs.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/verkehr/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/verkehr/prepare_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verkehr/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/verkehr/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verkehr/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/verkehr/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verkehr/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/verkehr/tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/verkehr/traffic.py" beforeDir="false" afterPath="$PROJECT_DIR$/verkehr/traffic.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="verkehr" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -26,7 +48,8 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ede" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../verkehr - Copy/verkehr/info.md" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -45,13 +68,32 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="630" y="264" key="FileChooserDialogImpl" timestamp="1583217261493">
+    <state x="630" y="264" key="FileChooserDialogImpl" timestamp="1585116862031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="630" y="264" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583217261493" />
-    <state x="655" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583466638610">
+    <state x="630" y="264" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585116862031" />
+    <state x="394" y="141" key="SettingsEditor" timestamp="1584598972670">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="655" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583466638610" />
+    <state x="394" y="141" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1584598972670" />
+    <state x="655" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1585885747933">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="655" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585885747933" />
+    <state x="723" y="463" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584777699649">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="723" y="463" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1584777699649" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/verkehr/traffic.py</url>
+          <line>304</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
