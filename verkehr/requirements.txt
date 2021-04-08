@@ -22,7 +22,7 @@ commonmark==0.9.1
 cryptography==2.8
 decorator==4.4.1
 defusedxml==0.6.0
-Django==2.2.7
+Django==2.2.20
 docutils==0.15.2
 entrypoints==0.3
 enum-compat==0.0.3
